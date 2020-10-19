@@ -1,0 +1,23 @@
+from pomegranate import *
+
+# Probabilidade de chuva e de ter sol.
+previsao = DiscreteDistribution({
+    "chuva": 0.7,
+    "sol":0.3
+})
+
+# Modelo de transição
+transitions = ConditionalProbabilityTable([
+    ["chuva", "chuva", 0.4],
+    ["chuva", "sol", 0.6],
+    ["sol", "chuva", 0.1],
+    ["sol", "sol", 0.9]
+], [previsao])
+
+# Modelo utilizado
+model = MarkovChain([previsao, transitions])
+
+# 100 amostras
+print(model.sample(100))
+
+!pip install pomegranate
